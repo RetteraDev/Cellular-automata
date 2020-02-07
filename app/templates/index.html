@@ -1,0 +1,39 @@
+{%extends "base.html"%}
+
+{%block main%}
+<form action="json.txt">
+    <p>D</p>
+    <input type="text" name="D" placeholder="D">
+    <p>h</p>
+    <input type="text" name="h"  placeholder="h">
+    <p>delta_T</p>
+    <input type="text" name="delta_T" placeholder="delta_T">
+    <p>steps</p>
+    <input type="text" name="steps" placeholder="steps">
+</form>
+<button type="submit" class="JSON_form">Send</button>
+
+<div class="wrapper"></div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    
+        var socket = io.connect('http://192.168.43.217:5050/');
+    
+        socket.on('new_cells', data => {
+            $(".wrapper").append('<li>'+"J = "+data.J+'</li>');
+            console.log(data);
+        });
+    
+        $('.JSON_form').on('click', function(event) {
+            event.preventDefault();
+            var data = ( $( "form" ).serializeArray() ), obj = {};
+            console.log(data)
+
+            socket.emit('send_cellaular_json', data);
+
+        });
+    });
+    </script>
+
+{%endblock%}
