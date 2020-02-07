@@ -5,6 +5,9 @@ from cellular_temp import get_C, get_J
 def index():
     return render_template('index.html')
 
+@socket.on('connect')
+def connection():
+    join_room(request.sid)
 
 @socket.on('send_cellaular_json')
 def send_cellaular_json(json):
@@ -111,14 +114,14 @@ def send_cellaular_json(json):
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#100     
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],#101
      ]
-    D = int(json[0]['value'])
-    h = int(json[1]['value'])
-    delta_T = int(json[2]['value'])
+    D = float(json[0]['value'])
+    h = float(json[1]['value'])
+    delta_T = float(json[2]['value'])
     steps = int(json[3]['value'])
     
     for i in range(steps):
         J = get_J(C, D, h) 
         C = get_C(C, D, h, delta_T)  
-        socket.emit('new_cells', data = {'C':C, 'J':J})
+        socket.emit('new_cells', data = {'C':C, 'J':J}, room = request.sid)
    
     
