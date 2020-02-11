@@ -1,7 +1,26 @@
+<html>
+
 {%extends "base.html"%}
 
 {%block main%}
-<form action="json.txt">
+<head>
+    <script>
+        function validateForm()
+        {
+            var Diffuz = document.forms["Start"]["D"].value;
+            var Side = document.forms["Start"]["h"].value;
+            var Time = document.forms["Start"]["delta_T"].value;
+            if ((Diffuz*Time)/(Side*Side)>0.25)
+            {
+                alert("Некорректные данные");
+                return false;
+            }
+            
+
+        }
+    </script>
+</head>
+<form name ="Start" onsubmit="return validateForm()" action="json.txt">
     <p>D</p>
     <input type="text" name="D" placeholder="D">
     <p>h</p>
@@ -10,30 +29,34 @@
     <input type="text" name="delta_T" placeholder="delta_T">
     <p>steps</p>
     <input type="text" name="steps" placeholder="steps">
+    <button type="submit" class="JSON_form">Send</button>
 </form>
-<button type="submit" class="JSON_form">Send</button>
+
 
 <div class="wrapper"></div>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
     
-        var socket = io.connect('http://192.168.43.217:5050/');
-    
-        socket.on('new_cells', data => {
-            $(".wrapper").append('<li>'+"J = "+data.J+'</li>');
-            console.log(data);
-        });
-    
-        $('.JSON_form').on('click', function(event) {
-            event.preventDefault();
-            var data = ( $( "form" ).serializeArray() ), obj = {};
-            console.log(data)
+    var socket = io.connect('http://192.168.1.100:5050/');
 
-            socket.emit('send_cellaular_json', data);
-
-        });
+    socket.on('new_cells', data => {
+        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); validateForm();
+        console.log(data);
     });
-    </script>
 
-{%endblock%}
+    $('.JSON_form').on('click', function(event) {
+        event.preventDefault();
+        var data = ( $( "form" ).serializeArray() ), obj = {};
+        
+        console.log(data)
+        
+
+        socket.emit('send_cellaular_json', data);
+
+
+    });
+});
+</script>
+{%endblock%}</html>
