@@ -5,6 +5,17 @@
 {%block main%}
 <head>
     <script>
+        /* function validateType() {
+            var Diffuz = document.forms["Start"]["D"].value;
+            var Side = document.forms["Start"]["h"].value;
+            var Time = document.forms["Start"]["delta_T"].value;
+            if (Diffuz == null){
+                alert("Некорректные данные");
+            return false;
+            }
+        } */
+    </script>
+    <script>
         function validateForm()
         {
             var Diffuz = document.forms["Start"]["D"].value;
@@ -12,7 +23,7 @@
             var Time = document.forms["Start"]["delta_T"].value;
             if ((Diffuz*Time)/(Side*Side)>0.25)
             {
-                alert("Некорректные данные");
+                alert("Некорректные данные");               
                 return false;
             }
             
@@ -20,7 +31,8 @@
         }
     </script>
 </head>
-<form name ="Start" onsubmit="return validateForm()" action="json.txt">
+
+<form name ="Start" onsubmit=" return validateForm()"  action="json.txt">
     <p>D</p>
     <input type="text" name="D" placeholder="D">
     <p>h</p>
@@ -42,7 +54,9 @@
     var socket = io.connect('http://192.168.1.100:5050/');
 
     socket.on('new_cells', data => {
-        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); validateForm();
+        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
+        //validateType();
+        validateForm();
         console.log(data);
     });
 
