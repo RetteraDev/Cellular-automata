@@ -1,15 +1,17 @@
+<!DOCTYPE html>
 <html>
-
 {%extends "base.html"%}
-
 {%block main%}
 <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" media="all" href="K:\Github\Cellular-automata\app\templates\form.css" >
+</head>
     <script>
         /* function validateType() {
             var Diffuz = document.forms["Start"]["D"].value;
             var Side = document.forms["Start"]["h"].value;
             var Time = document.forms["Start"]["delta_T"].value;
-            if (Diffuz == null){
+            if (Diffuz.length == 0){
                 alert("Некорректные данные");
             return false;
             }
@@ -30,11 +32,11 @@
 
         }
     </script>
-</head>
 
+    <div class="form_box">
 <form name ="Start" onsubmit=" return validateForm()"  action="json.txt">
     <p>D</p>
-    <input type="text" name="D" placeholder="D">
+    <input type="text" name="D" placeholder="D" >
     <p>h</p>
     <input type="text" name="h"  placeholder="h">
     <p>delta_T</p>
@@ -43,7 +45,7 @@
     <input type="text" name="steps" placeholder="steps">
     <button type="submit" class="JSON_form">Send</button>
 </form>
-
+</div>
 
 <div class="wrapper"></div>
 
@@ -55,8 +57,8 @@
 
     socket.on('new_cells', data => {
         $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
-        //validateType();
-        validateForm();
+        
+       validateForm();
         console.log(data);
     });
 
@@ -73,4 +75,5 @@
     });
 });
 </script>
-{%endblock%}</html>
+{%endblock%}
+</html>
