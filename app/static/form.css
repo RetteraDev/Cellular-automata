@@ -1,5 +1,6 @@
 .form_box{
     width: 300px;
+    background: black;
 }
 .form_box button [type=submit] {
     display: block;
