@@ -1,0 +1,16 @@
+.form_box{
+    width: 300px;
+    background: black;
+}
+.form_box button [type=submit] {
+    display: block;
+    border: 2px solid #cfcfcf;
+    font-size: 14px;
+    color: #444444;
+    padding: 7px 7px 8px;
+    width: 250px;
+    margin-bottom: 20px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+  }

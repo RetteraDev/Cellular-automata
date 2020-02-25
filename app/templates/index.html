@@ -1,9 +1,22 @@
+<!DOCTYPE html>
 <html>
-
 {%extends "base.html"%}
-
 {%block main%}
 <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='/static/form.css')}}">
+</head>
+    <script>
+        /* function validateType() {
+            var Diffuz = document.forms["Start"]["D"].value;
+            var Side = document.forms["Start"]["h"].value;
+            var Time = document.forms["Start"]["delta_T"].value;\
+            if (Diffuz.length == 0){
+                alert("Некорректные данные");
+            return false;
+            }
+        } */
+    </script>
     <script>
         function validateForm()
         {
@@ -12,17 +25,18 @@
             var Time = document.forms["Start"]["delta_T"].value;
             if ((Diffuz*Time)/(Side*Side)>0.25)
             {
-                alert("Некорректные данные");
+                alert("Некорректные данные");               
                 return false;
             }
             
 
         }
     </script>
-</head>
-<form name ="Start" onsubmit="return validateForm()" action="json.txt">
+
+    <div class="form_box">
+<form name ="Start" onsubmit=" return validateForm()"  action="json.txt">
     <p>D</p>
-    <input type="text" name="D" placeholder="D">
+    <input type="text" name="D" placeholder="D" >
     <p>h</p>
     <input type="text" name="h"  placeholder="h">
     <p>delta_T</p>
@@ -31,7 +45,7 @@
     <input type="text" name="steps" placeholder="steps">
     <button type="submit" class="JSON_form">Send</button>
 </form>
-
+</div>
 
 <div class="wrapper"></div>
 
@@ -42,7 +56,9 @@
     var socket = io.connect('http://192.168.1.100:5050/');
 
     socket.on('new_cells', data => {
-        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); validateForm();
+        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
+        
+       validateForm();
         console.log(data);
     });
 
@@ -59,4 +75,5 @@
     });
 });
 </script>
-{%endblock%}</html>
+{%endblock%}
+</html>
