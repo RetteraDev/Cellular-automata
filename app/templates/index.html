@@ -51,10 +51,23 @@
 <div class="wrapper"></div>
  <div class="container">
         <canvas id='canvas' width="600" height="600">Ваш браузер устарел!</canvas>
-        <div id="palette"></div>
+        <input id="width1" type="number">
+        <input id="height1" type="number">
+        <button  type="submit" id="click1">Изменить размер холста</button>
+        <div id="palette" ></div>
         <div id="clear">Очистить изображение</div>
       </div>
 
+      <script>
+        var can = document.getElementById('canvas'); // Ищем элемент по id
+        click1.onclick = function click1()
+        {
+        var w = document.getElementById('width1').value; // Получаем введённое значение
+        can.setAttribute('width', w); // Меняем ширину canvas элемента
+        var h = document.getElementById('height1').value; // Получаем введённое значение
+        can.setAttribute('height', h); // Меняем ширину canvas элемента
+        };
+        </script>
 
 
 <script type="text/javascript">

@@ -1,6 +1,6 @@
 .container {
     position: absolute;
-    margin-left: 700px;
+    margin-left: 760px;
     margin-top: 50px;
     
    
@@ -32,6 +32,8 @@
    
   #palette {
     width: 95px;
+    margin-left: 0px;
+    position: absolute;
   }
    
   #clear {
@@ -63,6 +65,7 @@ input[type="text"]{
   padding: 7px 7px 8px;
 }
 
+
 button[type="submit"] {
     
     border: 4px solid #cfcfcf;
@@ -74,3 +77,4 @@ button[type="submit"] {
     margin-left: 0px;
     
   }
+  
