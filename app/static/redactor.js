@@ -59,4 +59,9 @@ window.addEventListener("load", function onWindowLoad() {
         }
       }
     }
+    
+    var pixelData = context.getImageData(0,0,canvas.width,canvas.height);
+    this.console.log(pixelData);
+
+
 });
