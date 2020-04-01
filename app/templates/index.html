@@ -1,42 +1,13 @@
-<!DOCTYPE html>
-<html>
 {%extends "base.html"%}
 {%block main%}
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='form.css')}}">
-    <script src="{{ url_for('static', filename='redactor.js')}}"></script>
-</head>
-    <script>
-        /* function validateType() {
-            var Diffuz = document.forms["Start"]["D"].value;
-            var Side = document.forms["Start"]["h"].value;
-            var Time = document.forms["Start"]["delta_T"].value;\
-            if (Diffuz.length == 0){
-                alert("Некорректные данные");
-            return false;
-            }
-        } */
-    </script>
-    <script>
-        function validateForm()
-        {
-            var Diffuz = document.forms["Start"]["D"].value;
-            var Side = document.forms["Start"]["h"].value;
-            var Time = document.forms["Start"]["delta_T"].value;
-            if ((Diffuz*Time)/(Side*Side)>0.25)
-            {
-                alert("Некорректные данные");               
-                return false;
-            }
-            
 
-        }
-    </script>
-   
+<script src="{{ url_for('static', filename='validateForm.js')}}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='redactor.js')}}" type="text/javascript"></script>
 
-    <div class="form_box">
-<form name ="Start" onsubmit=" return validateForm()"  action="json.txt">
+<!-- Форма для ввода значений -->
+<div class="form_box">
+
+<form name ="Start">
     <p>D</p>
     <input type="text" name="D" placeholder="D" >
     <p>h</p>
@@ -46,54 +17,23 @@
     <p>steps</p>
     <input type="text" name="steps" placeholder="steps">    
 </form>
+
 <button type="submit" class="JSON_form">Send</button>
 </div>
+
+<!-- Контейнер для пришедших данных -->
 <div class="wrapper"></div>
- <div class="container">
-        <canvas id='canvas' width="600" height="600">Ваш браузер устарел!</canvas>
-        <input id="width1" type="number">
-        <input id="height1" type="number">
-        <button  type="submit" id="click1">Изменить размер холста</button>
-        <div id="palette" ></div>
-        <div id="clear">Очистить изображение</div>
-      </div>
 
-      <script>
-        var can = document.getElementById('canvas'); // Ищем элемент по id
-        click1.onclick = function click1()
-        {
-        var w = document.getElementById('width1').value; // Получаем введённое значение
-        can.setAttribute('width', w); // Меняем ширину canvas элемента
-        var h = document.getElementById('height1').value; // Получаем введённое значение
-        can.setAttribute('height', h); // Меняем ширину canvas элемента
-        };
-        </script>
+<!-- Контейнер для холста рисования -->
+<div class="container">
+    <canvas id='canvas' width="200" height="200">Ваш браузер устарел!</canvas>
+    <input id="width1" type="number">
+    <input id="height1" type="number">
+    <button  type="submit" id="click1">Изменить размер холста</button>
+    <div id="palette" ></div>
+    <div id="clear">Очистить изображение</div>
+</div>
 
-
-<script type="text/javascript">
-    $(document).ready(function() {
-    
-    var socket = io.connect('http://192.168.1.100:5050/');
-
-    socket.on('new_cells', data => {
-        $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
-        
-       validateForm();
-        console.log(data);
-    });
-
-    $('.JSON_form').on('click', function(event) {
-        event.preventDefault();
-        var data = ( $( "form" ).serializeArray() ), obj = {};
-        
-        console.log(data)
-        
-
-        socket.emit('send_cellaular_json', data);
-
-
-    });
-});
-</script>
 {%endblock%}
 </html>
+
