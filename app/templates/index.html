@@ -4,7 +4,8 @@
 {%block main%}
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='/static/form.css')}}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='form.css')}}">
+    <script src="{{ url_for('static', filename='redactor.js')}}"></script>
 </head>
     <script>
         /* function validateType() {
@@ -32,6 +33,7 @@
 
         }
     </script>
+   
 
     <div class="form_box">
 <form name ="Start" onsubmit=" return validateForm()"  action="json.txt">
@@ -42,12 +44,30 @@
     <p>delta_T</p>
     <input type="text" name="delta_T" placeholder="delta_T">
     <p>steps</p>
-    <input type="text" name="steps" placeholder="steps">
-    <button type="submit" class="JSON_form">Send</button>
+    <input type="text" name="steps" placeholder="steps">    
 </form>
+<button type="submit" class="JSON_form">Send</button>
 </div>
-
 <div class="wrapper"></div>
+ <div class="container">
+        <canvas id='canvas' width="600" height="600">Ваш браузер устарел!</canvas>
+        <input id="width1" type="number">
+        <input id="height1" type="number">
+        <button  type="submit" id="click1">Изменить размер холста</button>
+        <div id="palette" ></div>
+        <div id="clear">Очистить изображение</div>
+      </div>
+
+      <script>
+        var can = document.getElementById('canvas'); // Ищем элемент по id
+        click1.onclick = function click1()
+        {
+        var w = document.getElementById('width1').value; // Получаем введённое значение
+        can.setAttribute('width', w); // Меняем ширину canvas элемента
+        var h = document.getElementById('height1').value; // Получаем введённое значение
+        can.setAttribute('height', h); // Меняем ширину canvas элемента
+        };
+        </script>
 
 
 <script type="text/javascript">
