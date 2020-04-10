@@ -16,10 +16,10 @@ window.addEventListener("load", function onWindowLoad() {
   
     socket.on('new_cells', data => {
         // $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
-      pixelData['data'] = data['C'];
+      pixelData.data = data.C;
 
       context.putImageData(pixelData, 0, 0);
-      console.log(data['C'], pixelData);
+      console.log(data.C, pixelData);
       
     });
 
