@@ -1,20 +1,20 @@
-from copy import copy
-def get_J_and_C(C_dict, D, h, d_t, width, height):
+cpdef get_J_and_C (dict C_dict, float D, float h, float d_t, int width, int height):
 
-    C_list = []
-    C = []
-    index = 0
-    for k, v in C_dict.items():
+    cdef list C_list = []
+    cdef list C = []
+    cdef int i, j
+    cdef int index = 0
 
+    for i in range(len(C_dict)):
         if (index+1)%4 == 0:
-            C_list.append(v)
+            C_list.append(C_dict[str(index)])
             if len(C_list) == height:
                 C.append(C_list)
                 C_list = []
         index += 1
 
-    J = 0
-    print()
+    cdef long long int J = 0
+
     for i in range(width):
         for j in range(height):
 
@@ -52,3 +52,4 @@ def get_J_and_C(C_dict, D, h, d_t, width, height):
             J += C_dict[str((width*i+j)*4+3)]
 
     return J, C_dict
+

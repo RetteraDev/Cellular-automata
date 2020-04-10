@@ -1,5 +1,5 @@
 from app import *
-from cellular_temp import get_J_and_C
+import cellular_cython
 import time
 
 @app.route('/')
@@ -18,11 +18,14 @@ def send_cellaular_json(json):
     h = float(json[1])
     delta_T = float(json[2])
     steps = int(json[3])
-    C = list(json[4])
+    C = json[4]
     width = int(json[5])
     height = int(json[6])
-    
+
     for i in range(steps):
-        J, C = (i for i in get_J_and_C(C, D, h, delta_T, width, height)) 
+
+        t1 = time.time()
+        J, C = (i for i in cellular_cython.get_J_and_C(C, D, h, delta_T, width, height)) 
+        t1 = time.time() - t1
+        print(f"{t1} sec")
         socket.emit('new_cells', data = {'J':J, 'C':C, 'width':width, 'height':height}, room = request.sid)
-        print(i)

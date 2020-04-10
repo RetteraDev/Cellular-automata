@@ -12,23 +12,15 @@ window.addEventListener("load", function onWindowLoad() {
   };
 
   $(document).ready(function() {
-    var socket = io.connect('http://192.168.1.100:5050/');
+    var socket = io.connect('http://192.168.43.217:5050/');
   
     socket.on('new_cells', data => {
         // $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
+      pixelData['data'] = data['C'];
 
-        // Для смены пикселей внутри канваса меняем индексы прозрачности элементов
-        let index = 3;
-        for(i = 0; i < canvas.width; i++) {
-          for (j = 0; j < canvas.height; j++) {
-            // console.log(i, j, pixelData['data'][index], data['C'][i][j]);
-            pixelData['data'][index] = data['C'][i][j];
-            index += 4;
-          }
-        }
-
-        context.putImageData(pixelData, 0, 0);
-
+      context.putImageData(pixelData, 0, 0);
+      console.log(data['C'], pixelData);
+      
     });
 
   $('.JSON_form').on('click', function(event) {
@@ -46,20 +38,19 @@ window.addEventListener("load", function onWindowLoad() {
           // Получаем массив информации о изображении
           var imageInfo = imageToC()['data'];
 
-          // Создаем массив прозрачности закрашенных элементов канваса и добавляем ее
-          var transparency = [];
-          var temp = [];
-          for (i = 3; i < imageInfo.length; i += 4) {
-            temp.push(imageInfo[i]);
-            if (temp.length == canvas.width) {
-              transparency.push(temp);
-              temp = [];
-            }
-          }
-
-          console.log(imageInfo);
+          // // Создаем массив прозрачности закрашенных элементов канваса и добавляем ее
+          // var transparency = [];
+          // var temp = [];
+          // for (i = 3; i < imageInfo.length; i += 4) {
+          //   temp.push(imageInfo[i]);
+          //   if (temp.length == canvas.width) {
+          //     transparency.push(temp);
+          //     temp = [];
+          //   }
+          // }
           // Добавляем массив С и размеры поля в массив
-          data.push(transparency);
+          // data.push(transparency);
+          data.push(imageToC()['data']);
           data.push(canvas.width);
           data.push(canvas.height);
 
