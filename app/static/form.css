@@ -1,63 +1,9 @@
-.container {
-    position: absolute;
-    margin-left: 760px;
-    margin-top: 50px;
-    
-   
-
+#canvas {
+  border: solid 1px #aaa;
+  cursor: default;
+  vertical-align: top;
 }
-.button {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    padding: 1px;
-    cursor: pointer;
-    border: solid 1px #fff;
-  }
    
-  .button:hover {
-    border: solid 1px #f00;
-  }
-   
-  .button:active {
-    border: solid 1px #ff0;
-  }
-   
-  #palette, #canvas {
-    display: inline-block;
-    border: solid 1px #aaa;
-    cursor: default;
-    vertical-align: top;
-  }
-   
-  #palette {
-    width: 95px;
-    margin-left: 0px;
-    position: absolute;
-  }
-   
-  #clear {
-    background: #eee;
-    color: #777;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-    margin: 15px auto;
-    cursor: pointer;
-    border: 4px solid #cfcfcf;
-  }
-   
-  .container {
-     white-space: normal;
-     width: 710px;
-  }
-.form_box{
-    position: absolute;
-    margin-left:0px;
-    width: 240px;
-    font-size: 18px;
-    
-}
 input[type="text"]{
   display: block;
   width: 240px;
@@ -66,15 +12,4 @@ input[type="text"]{
 }
 
 
-button[type="submit"] {
-    
-    border: 4px solid #cfcfcf;
-    font-size: 14px;
-    color: #777;
-    padding: 7px;
-    width: 250px;
-    margin: 25px;
-    margin-left: 0px;
-    
-  }
   

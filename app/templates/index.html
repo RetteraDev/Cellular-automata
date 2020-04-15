@@ -4,36 +4,82 @@
 <script src="{{ url_for('static', filename='validateForm.js')}}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='redactor.js')}}" type="text/javascript"></script>
 
-<!-- Форма для ввода значений -->
-<div class="form_box">
 
-<form name ="Start">
-    <p>D</p>
-    <input type="text" name="D" placeholder="D" >
-    <p>h</p>
-    <input type="text" name="h"  placeholder="h">
-    <p>delta_T</p>
-    <input type="text" name="delta_T" placeholder="delta_T">
-    <p>steps</p>
-    <input type="text" name="steps" placeholder="steps">    
-</form>
+<div class="d-flex flex-row bd-highlight mb-5">
 
-<button type="submit" class="JSON_form">Send</button>
+    <!-- Форма для ввода значений -->
+    <div class="p-3 bd-highlight">
+        <form name ="Start"> 
+
+            <div class="form-group">
+                <label for="D">D <small class="form-text text-muted">Коэффициент диффузии</small></label>
+                <input type="text" name="D" class="form-control" id="D" placeholder="2e-06">
+            </div>
+
+            <div class="form-group">
+                <label for="h">h <small class="form-text text-muted">Сторона клетки</small></label>
+                <input type="text" name="h" class="form-control" id="h" placeholder="0.02">
+            </div>
+
+            <div class="form-group">
+                <label for="delta_T">delta_T <small class="form-text text-muted">Шаг по времени</small></label>
+                <input type="text" name="delta_T" class="form-control" id="delta_T" placeholder="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="steps">steps <small class="form-text text-muted">Число шагов</small></label>
+                <input type="text" name="steps" class="form-control" id="steps" placeholder="10">
+            </div>
+
+            <button type="submit" class="JSON_form mt-4 btn btn-primary btn-lg btn-block">Отправить</button>
+        </form>
+    </div>
+
+    <div class="p-3 bd-highlight"></div>
+
+    <!-- Контейнер для холста рисования -->
+    <div class="p-3 mt-5 bd-highlight">
+        <canvas id="canvas" width=300 height=300></canvas>
+    </div>
+
+    <!-- Контейнер для редактора -->
+    <div class="p-3 bd-highlight">
+        <div class="mt-5 interface">
+            <div class="mt-2 btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="pen" checked> Ручка
+                </label>
+                <label class="btn btn-secondary">
+                <input type="radio" name="options" id="eraser"> Ластик
+                </label>
+            </div>
+
+            <div class="mt-2 btn-group btn-group-toggle" data-toggle="buttons" id="brush_type">
+                <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="round" checked> Круглая
+                </label>
+                <label class="btn btn-secondary">
+                <input type="radio" name="options" id="square"> Квадратная
+                </label>
+            </div>
+
+            <div class="mt-2 row">
+                <div class="col">
+                <input id="width" type="number" class="form-control" placeholder="Ширина холста" placeholder="600">
+                </div>
+                <div class="col">
+                <input id="height" type="number" class="form-control" placeholder="Высота холста" placeholder="600">
+                </div>
+            </div>
+
+            <label for="brush_size">Размер кисти</label>
+            <input type="range" class="form-control-range" id="brush_size" min="0" max="100" step="1" value="8"><br>
+            
+            <button type="button" id="resize" class="btn btn-primary btn-lg btn-block">Изменить размер холста</button>
+            <button type="button" id="clear" class="btn btn-secondary btn-lg btn-block">Очистить изображение</button>
+        </div>
+    </div>
 </div>
-
-<!-- Контейнер для пришедших данных -->
-<div class="wrapper"></div>
-
-<!-- Контейнер для холста рисования -->
-<div class="container">
-    <canvas id='canvas' width="600" height="600">Ваш браузер устарел!</canvas>
-    <input id="width1" type="number">
-    <input id="height1" type="number">
-    <button  type="submit" id="click1">Изменить размер холста</button>
-    <div id="palette" ></div>
-    <div id="clear">Очистить изображение</div>
-</div>
-
 {%endblock%}
 </html>
 

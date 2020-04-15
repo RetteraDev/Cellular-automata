@@ -1,6 +1,9 @@
 from app import *
-import cellular_cython
 import time
+try:
+    from cellular_cython import get_J_and_C
+except ImportError:
+    from cellular_temp import get_J_and_C
 
 @app.route('/')
 def index():
@@ -43,7 +46,7 @@ def send_cellaular_json(json):
         # Замер времени работы вычислений
         # t1 = time.time()
 
-        J, send_C, C = (i for i in cellular_cython.get_J_and_C(C, D, h, delta_T, width, height))
+        J, send_C, C = (i for i in get_J_and_C(C, D, h, delta_T, width, height))
 
         # t1 = time.time() - t1
         # print(f"{t1} sec")
