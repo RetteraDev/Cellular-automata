@@ -2,8 +2,8 @@
 
 // Выполняем по завершении загрузки страницы
 window.addEventListener("load", function onWindowLoad() {
-  let pixelData;
-  var can = document.getElementById('canvas'); // Ищем элемент по id
+  
+  can = document.getElementById('canvas'); // Ищем элемент по id
   click1.onclick = function click1() {
       var w = document.getElementById('width1').value; // Получаем введённое значение
       can.setAttribute('width', w); // Меняем ширину canvas элемента
@@ -13,14 +13,15 @@ window.addEventListener("load", function onWindowLoad() {
 
   $(document).ready(function() {
     var socket = io.connect('http://192.168.43.217:5050/');
-  
-    socket.on('new_cells', data => {
-        // $(".wrapper").append('<li>'+"J = "+data.J+'</li>'); 
-      pixelData.data = data.C;
 
-      context.putImageData(pixelData, 0, 0);
-      console.log(data.C, pixelData);
-      
+    socket.on('new_cells', data => {
+
+      var C = new Uint8ClampedArray(data.C);
+      var data = new ImageData(C, canvas.width, canvas.height);
+
+      context.putImageData(data, 0, 0);
+
+      delete C, data;
     });
 
   $('.JSON_form').on('click', function(event) {
@@ -36,25 +37,12 @@ window.addEventListener("load", function onWindowLoad() {
           var data = [ D, h, delta_T, steps];
 
           // Получаем массив информации о изображении
-          var imageInfo = imageToC()['data'];
-
-          // // Создаем массив прозрачности закрашенных элементов канваса и добавляем ее
-          // var transparency = [];
-          // var temp = [];
-          // for (i = 3; i < imageInfo.length; i += 4) {
-          //   temp.push(imageInfo[i]);
-          //   if (temp.length == canvas.width) {
-          //     transparency.push(temp);
-          //     temp = [];
-          //   }
-          // }
-          // Добавляем массив С и размеры поля в массив
-          // data.push(transparency);
           data.push(imageToC()['data']);
           data.push(canvas.width);
           data.push(canvas.height);
 
           socket.emit('send_cellaular_json', data);
+          delete data;
       }
       else {
           alert("Неверные данные");
@@ -68,8 +56,8 @@ window.addEventListener("load", function onWindowLoad() {
     // Генерируем палитру в элемент #palette
     generatePalette(document.getElementById("palette"));
  
-    let canvas = document.getElementById("canvas");
-    let context = canvas.getContext("2d");
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
  
     // переменные для рисования
     context.lineCap = "round";
@@ -84,10 +72,10 @@ window.addEventListener("load", function onWindowLoad() {
     // На любое движение мыши по canvas будет выполнятся эта функция
     canvas.onmousemove = function drawIfPressed (e) {
       // в "e"  попадает экземпляр MouseEvent
-      let x = e.offsetX;
-      let y = e.offsetY;
-      let dx = e.movementX;
-      let dy = e.movementY;
+      var x = e.offsetX;
+      var y = e.offsetY;
+      var dx = e.movementX;
+      var dy = e.movementY;
  
       // Проверяем зажата ли какая-нибудь кнопка мыши
       // Если да, то рисуем
@@ -103,10 +91,10 @@ window.addEventListener("load", function onWindowLoad() {
     function generatePalette(palette) {
       // генерируем палитру
       // в итоге 5^3 цветов = 125
-      for (let r = 0, max = 4; r <= max; r++) {
-        for (let g = 0; g <= max; g++) {
-          for (let b = 0; b <= max; b++) {
-            let paletteBlock = document.createElement('div');
+      for (var r = 0, max = 4; r <= max; r++) {
+        for (var g = 0; g <= max; g++) {
+          for (var b = 0; b <= max; b++) {
+            var paletteBlock = document.createElement('div');
             paletteBlock.className = 'button';
             paletteBlock.addEventListener('click', function changeColor(e) {
               context.strokeStyle = e.target.style.backgroundColor;
@@ -125,7 +113,7 @@ window.addEventListener("load", function onWindowLoad() {
     }
     
     function imageToC() {
-      pixelData = context.getImageData(0,0,canvas.width,canvas.height);
+      var pixelData = context.getImageData(0,0,canvas.width,canvas.height);
       return pixelData;
     }
     
