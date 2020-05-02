@@ -10,17 +10,21 @@ window.addEventListener("load", function onWindowLoad() {
       can.setAttribute('height', h); // Меняем ширину canvas элемента
   };
 
+  document.getElementById("clear").onclick = function clear() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
   $(document).ready(function() {
     var socket = io.connect('http://192.168.43.217:5050/');
 
     socket.on('new_cells', data => {
 
-      // var C = new Uint8ClampedArray(data.C);
-      var data = new ImageData(data.C, canvas.width, canvas.height);
+      var C = new Uint8ClampedArray(data.C);
+      var data = new ImageData(C, canvas.width, canvas.height);
 
       ctx.putImageData(data, 0, 0);
 
-      delete data;
+      delete C, data;
     });
 
   $('.JSON_form').on('click', function(event) {
@@ -52,6 +56,7 @@ window.addEventListener("load", function onWindowLoad() {
   });
 });
 
+
     // Выводим концентрацию
     $('#canvas').mousemove(function(e) {
       var pos = findPos(this);
@@ -60,6 +65,7 @@ window.addEventListener("load", function onWindowLoad() {
       var coord = "x=" + x + ", y=" + y;
       var c = this.getContext('2d');
       var p = c.getImageData(x, y, 1, 1).data; 
+      
       $('#status').html(coord + "<br>" + p[3]);
     });
 

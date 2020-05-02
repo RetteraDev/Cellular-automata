@@ -11,5 +11,11 @@ input[type="text"]{
   padding: 7px 7px 8px;
 }
 
-
-  
+.tooltip {
+  display: block;
+  padding: 15px;
+  position: absolute;
+  background: #000;
+  border-radius: 4px;
+  color: #000;
+}

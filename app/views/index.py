@@ -33,7 +33,7 @@ def send_cellaular_json(json):
     for k, v in C_dict.items():
 
         if (index+1)%4 == 0:
-            C_list.append(v)
+            C_list.append(v/255)
             if len(C_list) == height:
                 C.append(C_list)
                 C_list = []
